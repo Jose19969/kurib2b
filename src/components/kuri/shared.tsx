@@ -23,9 +23,10 @@ export function StatusPill({ status }: { status: string }) {
   return <span className={className}>{status}</span>;
 }
 
-export function StageStrip({ current, caption, compact = false }: { current: number; caption?: string; compact?: boolean }) {
+export function StageStrip({ current, win, caption, compact = false }: { current: number; win?: [number, number]; caption?: string; compact?: boolean }) {
+  const inWindow = (i: number) => !!win && i >= win[0] && i <= win[1];
   return <div className={`stage-wrap ${compact ? "stage-compact" : ""}`}>
-    <div className="stage-strip">{stages.map((stage, i) => <div className={`stage-segment ${i < current ? "stage-done" : i === current ? "stage-current" : i === current + 1 || (current < 3 && i === 4) ? "stage-window" : "stage-future"}`} key={stage}><span>{stage}</span>{i === current && !compact && <small>Now</small>}</div>)}</div>
+    <div className="stage-strip">{stages.map((stage, i) => <div className={`stage-segment ${i < current ? "stage-done" : i === current ? "stage-current" : inWindow(i) ? "stage-window" : "stage-future"}`} key={stage}><span>{stage}</span>{i === current && !compact && <small>Now</small>}</div>)}</div>
     {caption && <p className="stage-caption">{caption}</p>}
   </div>;
 }
@@ -44,9 +45,9 @@ export function VerdictPanel({ project, kind, expanded = false }: { project: Opp
   return <section className="verdict-panel">
     <div className="verdict-top"><span className="verdict-eyebrow">KURI VERDICT · {productName(kind).toUpperCase()}</span><StatusPill status={details.status} /></div>
     <p className="verdict-headline">{kind === "switches" ? project.id === "green-meadows" ? "Get on the electrical spec list before conduit work starts." : details.reason : project.id === "green-meadows" ? "Too early to quote. Re-engage near the roof slab, around Mar 2027." : details.reason}</p>
-    <div className="verdict-score"><ScoreRing score={details.score} label={productName(kind)} /><div><AiLabel /><p className="verdict-window">{kind === "switches" ? `Window ${details.status === "Pitch now" ? `open now, closes in ~${project.window}` : project.window}` : project.stageIndex >= 3 ? "Window open now" : "Opens near roof slab"}</p><button className="text-action" onClick={() => setOpen(!open)}>{open ? "Hide score breakdown" : `Why ${details.score}?`} <ChevronDown size={14} className={open ? "rotate-180" : ""} /></button></div></div>
+    <div className="verdict-score"><ScoreRing score={details.score} label={productName(kind)} /><div><AiLabel /><p className="verdict-window">Window {details.windowText}</p><button className="text-action" onClick={() => setOpen(!open)}>{open ? "Hide score breakdown" : `Why ${details.score}?`} <ChevronDown size={14} className={open ? "rotate-180" : ""} /></button></div></div>
     {open && <div className="score-breakdown">{breakdown.map(([label, value, max]) => <div className="score-row" key={label}><span>{label}</span><div className="score-bar"><i style={{ width: `${Number(value) / Number(max) * 100}%` }} /></div><b>{value}/{max}</b></div>)}<p>Weights are provisional until enough wins and losses calibrate them.</p></div>}
-    <StageStrip current={project.stageIndex} caption={`Your window: ${kind === "switches" ? `open now, closes in ~${project.window}` : project.stageIndex >= 3 ? "open now" : "opens near the roof slab"}`} />
+    <StageStrip current={project.stageIndex} win={details.win} caption={`Your window: ${details.windowText}`} />
   </section>;
 }
 
