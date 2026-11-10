@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project architecture
+- Keep the sample Kuri experience client-only and data-driven from `src/data/mock.ts`; the clickable prototype intentionally has no authentication or persistent backend.

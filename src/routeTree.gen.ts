@@ -10,33 +10,101 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BriefRouteImport } from './routes/brief'
+import { Route as BuildersRouteImport } from './routes/builders'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as BuildersIdRouteImport } from './routes/builders.$id'
+import { Route as OpportunityIdRouteImport } from './routes/opportunity.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BriefRoute = BriefRouteImport.update({
+  id: '/brief',
+  path: '/brief',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildersRoute = BuildersRouteImport.update({
+  id: '/builders',
+  path: '/builders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildersIdRoute = BuildersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => BuildersRoute,
+} as any)
+const OpportunityIdRoute = OpportunityIdRouteImport.update({
+  id: '/opportunity/$id',
+  path: '/opportunity/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/brief': typeof BriefRoute
+  '/builders': typeof BuildersRouteWithChildren
+  '/explore': typeof ExploreRoute
+  '/builders/$id': typeof BuildersIdRoute
+  '/opportunity/$id': typeof OpportunityIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/brief': typeof BriefRoute
+  '/builders': typeof BuildersRouteWithChildren
+  '/explore': typeof ExploreRoute
+  '/builders/$id': typeof BuildersIdRoute
+  '/opportunity/$id': typeof OpportunityIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/brief': typeof BriefRoute
+  '/builders': typeof BuildersRouteWithChildren
+  '/explore': typeof ExploreRoute
+  '/builders/$id': typeof BuildersIdRoute
+  '/opportunity/$id': typeof OpportunityIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/brief'
+    | '/builders'
+    | '/explore'
+    | '/builders/$id'
+    | '/opportunity/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/brief'
+    | '/builders'
+    | '/explore'
+    | '/builders/$id'
+    | '/opportunity/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/brief'
+    | '/builders'
+    | '/explore'
+    | '/builders/$id'
+    | '/opportunity/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BriefRoute: typeof BriefRoute
+  BuildersRoute: typeof BuildersRouteWithChildren
+  ExploreRoute: typeof ExploreRoute
+  OpportunityIdRoute: typeof OpportunityIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +116,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brief': {
+      id: '/brief'
+      path: '/brief'
+      fullPath: '/brief'
+      preLoaderRoute: typeof BriefRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/builders': {
+      id: '/builders'
+      path: '/builders'
+      fullPath: '/builders'
+      preLoaderRoute: typeof BuildersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/builders/$id': {
+      id: '/builders/$id'
+      path: '/$id'
+      fullPath: '/builders/$id'
+      preLoaderRoute: typeof BuildersIdRouteImport
+      parentRoute: typeof BuildersRoute
+    }
+    '/opportunity/$id': {
+      id: '/opportunity/$id'
+      path: '/opportunity/$id'
+      fullPath: '/opportunity/$id'
+      preLoaderRoute: typeof OpportunityIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface BuildersRouteChildren {
+  BuildersIdRoute: typeof BuildersIdRoute
+}
+
+const BuildersRouteChildren: BuildersRouteChildren = {
+  BuildersIdRoute: BuildersIdRoute,
+}
+
+const BuildersRouteWithChildren = BuildersRoute._addFileChildren(
+  BuildersRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BriefRoute: BriefRoute,
+  BuildersRoute: BuildersRouteWithChildren,
+  ExploreRoute: ExploreRoute,
+  OpportunityIdRoute: OpportunityIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
