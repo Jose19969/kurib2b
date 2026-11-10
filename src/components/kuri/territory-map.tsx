@@ -75,7 +75,7 @@ export function TerritoryMap({ district, onDistrict, resultIds }: { district: st
       libRef.current = L;
       const view = DISTRICT_VIEWS[district] ?? { center: [11.035, 76.97] as [number, number], zoom: 12 };
       const map = L.map(el.current, { zoomControl: false, scrollWheelZoom: false }).setView(view.center, view.zoom);
-      L.control.zoom({ position: "bottomright" }).addTo(map);
+      L.control.zoom({ position: "topright" }).addTo(map);
       L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: "abcd",
