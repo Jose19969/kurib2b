@@ -835,3 +835,119 @@ h2 { margin-bottom: 0; font-size: 22px; font-weight: 600; line-height: 1.25; }
 .territory-map .leaflet-control-zoom a { color: var(--ink); }
 .territory-footer { flex-wrap: wrap; row-gap: 6px; }
 .territory-note { margin-left: auto; }
+
+/* ==========================================================
+   Design pass v3 — one accent, calm neutrals, one geometry
+   Orange = "act now" only. Ink = Kuri's AI judgement.
+   Everything else is greyscale.
+   ========================================================== */
+:root { --r-card: 18px; --r-inner: 12px; --soft: color-mix(in oklab, var(--ink) 3%, var(--paper)); --hair: color-mix(in oklab, var(--ink) 9%, var(--background)); }
+
+/* Type scale: calmer headlines, quieter labels */
+.eyebrow, .verdict-eyebrow, .influence-map > p, .missed-cause > span { font-size: 12px; font-weight: 600; letter-spacing: .05em; }
+.today-heading h1, .brief-heading h1 { font-size: clamp(34px, 3.3vw, 48px); line-height: 1.08; letter-spacing: -.025em; }
+.page-intro h1, .explore-heading h1 { font-size: clamp(34px, 3.5vw, 52px); line-height: 1.06; letter-spacing: -.025em; }
+.opportunity-heading h1 { font-size: clamp(32px, 3.1vw, 44px); letter-spacing: -.02em; }
+.today-heading { margin-bottom: 28px; }
+.heading-date { display: none; }
+
+/* Surfaces: one radius, hairline borders, almost no shadow */
+.queue-card, .live-preview, .call-panel, .territory-panel, .team-member, .influence-map, .people-view .person-row { border-color: var(--hair); }
+.queue-card, .live-preview, .call-panel, .territory-panel, .team-member, .influence-map { border-radius: var(--r-card); background: var(--paper); box-shadow: 0 1px 2px rgb(17 20 24 / .03); }
+.ai-alert, .verdict-panel, .weekly-actions, .brief-metric-dark { border-radius: var(--r-card); }
+.next-step, .call-ai, .score-breakdown { border-radius: var(--r-inner); }
+.live-preview, .call-panel, .territory-panel { padding: 24px; }
+
+/* Call queue */
+.queue-list { gap: 12px; }
+.queue-card { padding: 20px 22px 16px; }
+.queue-card:hover { transform: none; border-color: color-mix(in oklab, var(--ink) 22%, var(--background)); box-shadow: 0 8px 24px rgb(17 20 24 / .06); }
+.queue-card-selected, .queue-card-selected:hover { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.queue-card-top { gap: 12px; min-height: 44px; }
+.queue-verdict { display: grid; gap: 3px; justify-items: start; }
+.queue-product { color: var(--muted-foreground); font-size: 13px; font-weight: 500; }
+.queue-stage-note { margin-left: auto; color: var(--muted-foreground); font-size: 13px; text-align: right; }
+.queue-card h3 { margin-top: 14px; font-size: 18px; letter-spacing: -.01em; }
+.queue-reason { color: var(--foreground); }
+.queue-reason svg, .reason-item > span { color: var(--muted-foreground); }
+.queue-card-bottom { margin-top: 14px; padding-top: 12px; border-top-color: var(--hair); }
+.queue-tools button { color: var(--muted-foreground); }
+
+/* Score ring: small rings show only the number */
+.score-ring-small { flex-basis: 44px; width: 44px; height: 44px; }
+.score-ring-small .score-ring-inner span { display: none; }
+.score-ring-small .score-ring-inner strong { font-size: 16px; font-weight: 700; }
+
+/* Status: accent only for "Pitch now" */
+.status-pill { min-height: 26px; padding: 0 11px; font-size: 12px; font-weight: 600; letter-spacing: .01em; }
+.status-now { background: var(--orange); color: #fff; }
+.status-month { border: 1px solid color-mix(in oklab, var(--orange) 45%, var(--paper)); background: transparent; color: var(--orange-ink); }
+.status-follow, .status-plan { border: 1px solid color-mix(in oklab, var(--ink) 20%, var(--paper)); background: transparent; color: var(--ink); }
+.status-closed { border: 1px solid transparent; background: var(--muted); color: var(--muted-foreground); }
+.verdict-panel .status-follow, .verdict-panel .status-plan, .verdict-panel .status-month { border-color: oklch(0.45 0.01 250); background: transparent; color: oklch(0.93 0.005 250); }
+
+/* Trust: verified is calm ink, conflict is the only warm signal */
+.trust-verified { color: var(--muted-foreground); }
+.trust-verified svg { color: var(--ink); }
+.trust-conflict { color: var(--orange-ink); font-weight: 600; }
+
+/* AI identity */
+.ai-label { gap: 6px; color: var(--orange-ink); font-size: 12px; font-weight: 600; letter-spacing: .02em; }
+.ai-alert { min-height: 76px; padding: 16px 20px; }
+.alert-icon { background: oklch(1 0 0 / .08); }
+
+/* Stage strip */
+.stage-segment { border-radius: 6px; }
+.stage-done { background: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
+.stage-compact .stage-strip { gap: 3px; }
+.stage-compact .stage-segment { height: 4px; border-radius: 2px; }
+.stage-compact .stage-done { background: color-mix(in oklab, var(--ink) 55%, var(--paper)); }
+
+/* Verdict card */
+.verdict-panel { padding: 24px; }
+.verdict-headline { font-size: 21px; line-height: 1.32; letter-spacing: -.01em; }
+
+/* People and avatars: neutral, never colour-coded */
+.contact-avatar, .mini-avatar, .stack-avatar, .activity-avatar, .person-tone-0, .person-tone-1, .person-tone-2, .person-tone-3, .person-tone-4 { background: color-mix(in oklab, var(--ink) 7%, var(--paper)); color: var(--ink); }
+.stack-avatar { border-color: var(--paper); }
+.person-confidence { color: var(--muted-foreground); font-size: 13px; }
+.stage-pill > span { background: var(--muted-foreground); }
+
+/* Influence map aligned to construction stages */
+.influence-map { padding: 18px; }
+.influence-map > p { margin: 0 0 14px; }
+.influence-stages { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.influence-col { display: flex; min-width: 0; flex-direction: column; gap: 8px; }
+.influence-stage { display: flex; align-items: baseline; gap: 6px; color: var(--muted-foreground); font-size: 12px; font-weight: 600; }
+.influence-stage em { color: var(--orange-ink); font-style: normal; }
+.influence-tick { height: 4px; border-radius: 2px; background: var(--muted); }
+.influence-has .influence-tick { background: color-mix(in oklab, var(--ink) 55%, var(--paper)); }
+.influence-now .influence-tick { background: var(--orange); }
+.influence-chip { display: grid; min-width: 0; gap: 1px; padding: 7px 9px; border: 1px solid var(--hair); border-radius: 10px; background: var(--soft); color: var(--ink); font-size: 13px; font-weight: 600; text-align: left; }
+.influence-chip small { overflow: hidden; color: var(--muted-foreground); font-size: 12px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Tabs and product switch */
+.evidence-tab-active::after { background: var(--ink); }
+
+/* Brief: tonal pipeline, neutral team */
+.pipeline-bar { height: 12px; border-radius: 999px; }
+.pipeline-bar span:nth-child(1), .pipeline-legend .legend-one { background: color-mix(in oklab, var(--ink) 88%, var(--paper)); }
+.pipeline-bar span:nth-child(2), .pipeline-legend .legend-two { background: color-mix(in oklab, var(--ink) 58%, var(--paper)); }
+.pipeline-bar span:nth-child(3), .pipeline-legend .legend-three { background: color-mix(in oklab, var(--ink) 32%, var(--paper)); }
+.pipeline-bar span:nth-child(4), .pipeline-legend .legend-four { background: var(--orange); }
+.missed-score { border-color: var(--hair); background: var(--paper); color: var(--ink); }
+.logging-bar i { background: var(--ink); }
+.suggestion-number, .suggestion-resolved > span { color: oklch(0.72 0.01 250); }
+
+/* Explore */
+.query-chip-off { border-style: dashed; color: var(--muted-foreground); text-decoration: line-through; }
+.pin-later { background: var(--ink); }
+.signal-mid { background: var(--ink); }
+
+/* Floating action: a labelled pill, not a red blob */
+.floating-log { width: auto !important; height: 50px !important; gap: 8px; padding: 0 20px 0 16px !important; border: 0 !important; border-radius: 999px !important; background: var(--ink) !important; color: #fff !important; font-size: 15px; font-weight: 600; box-shadow: 0 12px 30px rgb(17 20 24 / .22) !important; }
+.floating-log:hover { transform: translateY(-2px); background: var(--ink-soft) !important; }
+.floating-log svg { color: oklch(0.78 0.13 43); }
+.page-shell { padding-bottom: 120px; }
+.brief-edition { display: none; }
+.avatar-button { background: color-mix(in oklab, var(--ink) 7%, var(--paper)) !important; color: var(--ink) !important; }
